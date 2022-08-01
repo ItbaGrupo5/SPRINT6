@@ -194,4 +194,45 @@ where pre.customer_id = cli.customer_id AND cli.branch_id = suc.branch_id
 GROUP BY suc.branch_name
 
 
+CREATE TABLE auditoria_cuenta (
+	old_id INTEGER,
+	new_id INTEGER,
+	old_balance INTEGER,
+	new_balance INTEGER,
+	old_iban TEXT,
+	new_iban TEXT,
+	user_action TEXT,
+	created_at TEXT
+);
+
+CREATE TRIGGER UpdateCuenta
+AFTER UPDATE ON cuenta
+BEGIN
+	INSERT INTO auditoria_cuenta (old_id, new_id,old_balance, new_balance, old_iban, new_iban,	user_action,created_at )
+	VALUES (old.account_id,	new.account_id,	old.balance, new.balance, old.iban,	new.iban, 'UPDATE',	datetime('now'));
+END
+
+UPDATE cuenta
+SET balance = -100
+WHERE account_id = 1
+
+
+BEGIN TRANSACTION
+    UPDATE cuenta
+    SET balance = balance - 1000
+    WHERE account_id = 200;
+	
+    UPDATE cuenta 
+    SET balance = balance + 1000
+    WHERE account_id = 400;
+	
+
+    INSERT INTO movimientos(account_id, monto, type_operation, action_date)
+    VALUES (200, 1000, "TRANSFERENCIA ENVIADA", datetime('now'));
+	
+    INSERT INTO movimientos(account_id, monto, type_operation, action_date)
+    VALUES (400, 1000, "TRANSFERENCIA RECIBIDA", datetime('now'));
+    COMMIT;
+END
+
 
