@@ -1,7 +1,7 @@
 # La persistencia de los datos - SPRINT6
 
 Problema bases de datos del curso FullStack Developer - ITBA.
-Resolucion realizada para SQLite.
+Solucion realizada para SQLite.
 
 # Funcionamiento
 
