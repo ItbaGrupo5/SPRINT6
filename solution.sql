@@ -159,4 +159,39 @@ SELECT count(customer_name) AS Menores_50
 FROM cliente WHERE (date('now') - dob) < 50
 
 
+SELECT * FROM cuenta
+WHERE balance/100 > 8000
+ORDER BY account_id LIMIT 5
+
+SELECT * FROM prestamo
+WHERE loan_date LIKE "%-04-%" OR
+	  loan_date LIKE "%-06-%" OR loan_date LIKE "%-08-%"
+ORDER BY loan_total
+
+SELECT SUM(loan_total), loan_type
+FROM prestamo
+GROUP BY loan_type
+
+SELECT COUNT(c.customer_name) AS CantidadClientes, s.branch_name
+FROM cliente c, sucursal s
+WHERE c.branch_id = s.branch_id
+GROUP BY s.branch_name
+ORDER BY COUNT(c.customer_name) DESC
+
+Nos FALTA LA CANTIDAD DE EMPLEADO POR CLIENTE EN UNA SUCURSAL COMO NUMERO REAL
+
+SELECT count(t.card_type), s.branch_name
+FROM tarjeta t, sucursal s, cliente c
+WHERE t.customer_id = c.customer_id AND
+		s.branch_id = c.branch_id AND
+		t.card_type = "CREDITO"
+GROUP BY s.branch_name
+ORDER BY s.branch_name
+
+SELECT sum(pre.loan_total) / count((pre.loan_type)), suc.branch_name
+from prestamo pre, cliente cli, sucursal suc
+where pre.customer_id = cli.customer_id AND cli.branch_id = suc.branch_id
+GROUP BY suc.branch_name
+
+
 
