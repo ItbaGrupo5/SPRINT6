@@ -125,3 +125,38 @@ ORDER BY p.loan_total DESC LIMIT
 
 
 /* TERCER PROBLEMATICA */
+
+CREATE VIEW Cuenta_Saldo_Negativo AS
+SELECT c.customer_name AS NombreCliente,
+	   c.customer_DNI AS DNI_Cliente,
+	   cue.account_id AS Numero_Cuenta,
+	   cue.balance AS Saldo
+FROM cliente c, cuenta cue
+WHERE c.customer_id = cue.customer_id AND cue.balance < 0;
+
+SELECT customer_name, customer_surname, (date('now') - dob) AS Edad
+FROM cliente
+WHERE customer_surname LIKE "%Z%" AND customer_surname LIKE "%z%";
+
+SELECT c.customer_name as Nombre, c.customer_surname AS Apellido, (date('now')-c.dob)as Edad, s.branch_name as Nombre_sucursal
+FROM cliente c, sucursal s
+WHERE c.customer_name = "Brendan" AND
+		c.branch_id = s.branch_id
+ORDER BY s.branch_name ASC
+
+SELECT * FROM prestamo
+WHERE loan_total/100 > 80000
+UNION
+SELECT * FROM prestamo
+WHERE loan_type = "PRENDARIO" ORDER BY loan_type DESC
+
+SELECT *
+FROM prestamo
+WHERE loan_total > (SELECT avg(loan_total)
+					FROM prestamo)
+
+SELECT count(customer_name) AS Menores_50
+FROM cliente WHERE (date('now') - dob) < 50
+
+
+
