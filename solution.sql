@@ -67,3 +67,30 @@ CREATE TABLE `direcciones` (
 	ciudad TEXT NOT NULL,
 	pais TEXT NOT NULL
 );
+
+UPDATE empleado 
+SET employee_hire_date= (substr(employee_hire_date, 7, 4) || '-' || substr(employee_hire_date, 4, 2) || '-' || substr(employee_hire_date, 1, 2))
+WHERE employee_hire_date <> ""
+
+/* SEGUNDA PROBLEMATICA */
+
+CREATE VIEW  vista_1 AS
+SELECT DISTINCT
+		cli.customer_id AS IdCliente,
+		cli.customer_name AS NombreCliente,
+		cli.customer_surname AS ApellidoCliente,
+		cli.customer_DNI AS DNI_Cliente,
+		(date('now')-cli.dob) AS edad,
+		suc.branch_number AS NumeroSucursal
+FROM cliente cli, sucursal suc 
+WHERE suc.branch_id = cli.branch_id ;
+
+SELECT * FROM vista_1
+	WHERE EDAD > 40
+ORDER BY DNI_Cliente ASC
+
+SELECT * FROM vista_1
+	WHERE NombreCliente = "Anne" or NombreCliente = "Tyler"
+ORDER BY EDAD ASC
+
+/* Insertar 5 nuevos clientes de un JSON */
