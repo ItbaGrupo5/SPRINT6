@@ -37,3 +37,33 @@ CREATE TABLE tarjeta(
    customer_id INTEGER NOT NULL,
    FOREIGN KEY (customer_id) REFERENCES  cliente (customer_id)
 );
+
+/* Los INSERT se realizan en otro archivo con nombre TARJETA_GENERACION*/
+
+CREATE TABLE marca_tarjeta(
+   brand_card_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   brand_name TEXT NOT NULL,
+   card_id INTEGER NOT NULL,
+   FOREIGN KEY (card_id) REFERENCES  tarjeta (card_id)
+);
+
+/* Los INSERT se realizan en otro archivo con nombre MARCA_TARJETA_GENERACION*/
+
+CREATE TABLE tipo_cuenta(
+   account_type_id INTEGER PRIMARY KEY AUTOINCREMENT,
+   account_type_description TEXT NOT NULL,
+   account_id INTEGER default NULL,
+   FOREIGN KEY (account_id) REFERENCES cuenta (account_id)
+);
+
+/* Los INSERT se realizan en otro archivo con nombre TIPO_CUENTA_GENERACION*/
+
+
+CREATE TABLE `direcciones` (
+	direccion_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	calle TEXT NOT NULL,
+	numero INTEGER NOT NULL,
+	prov TEXT NOT NULL,
+	ciudad TEXT NOT NULL,
+	pais TEXT NOT NULL
+);
